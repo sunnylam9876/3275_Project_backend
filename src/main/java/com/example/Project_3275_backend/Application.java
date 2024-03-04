@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 
 import com.example.Project_3275_backend.Model.Article;
 import com.example.Project_3275_backend.Model.ArticleRepository;
+import com.example.Project_3275_backend.Model.User;
+import com.example.Project_3275_backend.Model.UserRepository;
 
 @SpringBootApplication
 public class Application {
@@ -16,11 +18,22 @@ public class Application {
 	}
 	
 	@Bean
-	ApplicationRunner init(ArticleRepository articleRepo) {
+	ApplicationRunner init(UserRepository userRepo, ArticleRepository articleRepo) {
 		return args -> {
-			articleRepo.save(new Article("Topic_1", "Content_1"));
-			articleRepo.save(new Article("Topic_2", "Content_2"));
+			// Create users at the beginning
+			User writer1 = userRepo.save(new User("writer_1", "password_1", "writer"));
+			User writer2 = userRepo.save(new User("writer_2", "password_2", "writer"));
+			User reader1 = userRepo.save(new User("reader_1", "password_3", "reader"));
+			User admin1 = userRepo.save(new User("admin_1", "password_4", "admin"));
+			
+			// Create some articles
+			articleRepo.save(new Article("Title 1", "Content of article 1", writer1.getUserId()));
+			articleRepo.save(new Article("Title 2", "Content of article 2", writer2.getUserId()));
+
+
 		};
 	}
+	
+	
 
 }

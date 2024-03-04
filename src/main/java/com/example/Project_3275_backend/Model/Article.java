@@ -2,9 +2,12 @@ package com.example.Project_3275_backend.Model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -12,39 +15,47 @@ import jakarta.persistence.Table;
 public class Article {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private long articleId;
 	
-	@Column(name = "topic")
-	private String topic;
+	@Column(name = "title")
+	private String title;
 	
 	@Column(name = "content")
 	private String content;
+	
+//	@ManyToOne
+//    @JoinColumn(name = "userId", referencedColumnName = "userId")
+//    private User user;
+	@Column(name = "userId")
+	private long userId;
+
 	
 	// Constructors	
 	public Article() {
 		
 	}
 
-	public Article(String topic, String content) {
-		this.topic = topic;
+	public Article(String title, String content, long userId) {
+		this.title = title;
 		this.content = content;
+		this.userId = userId;
 	}
 
 	// Getters and Setters
-	public long getId() {
-		return id;
+	public long getarticleId() {
+		return articleId;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setarticleId(long articleId) {
+		this.articleId = articleId;
 	}
 
-	public String getTopic() {
-		return topic;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setTopic(String topic) {
-		this.topic = topic;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getContent() {
@@ -54,11 +65,27 @@ public class Article {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
 
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+	
+	
+	
+//	public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 	
 	
 	
 }
 
-//topic, content, category, numberOfView, numberOfLike, createdAt
+//title, content, category, numberOfView, numberOfLike, createdAt
