@@ -28,6 +28,12 @@ public class Article {
 //    private User user;
 	@Column(name = "userId")
 	private long userId;
+	
+	@Column(name = "noOfView")
+	private int noOfView;
+	
+	@Column(name = "noOfLike")
+	private int noOfLike;
 
 	
 	// Constructors	
@@ -72,6 +78,22 @@ public class Article {
 
 	public void setUserId(long userId) {
 		this.userId = userId;
+	}
+
+	public int getNoOfView() {
+		return noOfView;
+	}
+
+	public void setNoOfView(int noOfView) {
+		this.noOfView = noOfView;
+	}
+
+	public int getNoOfLike() {
+		return noOfLike;
+	}
+
+	public void setNoOfLike(int noOfLike) {
+		this.noOfLike = noOfLike;
 	}
 	
 	
