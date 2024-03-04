@@ -1,5 +1,0 @@
-package com.example.Project_3275_backend.Model;
-
-public class Testing {
-123
-}
