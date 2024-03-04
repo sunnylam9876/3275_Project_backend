@@ -2,11 +2,16 @@ package com.example.Project_3275_backend.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,25 +28,63 @@ public class ArticleController {
 	// Get all article
 	// ****for checking purpose****
 	@GetMapping("/articles")
-	public ResponseEntity<List<Article>> getAllCourse(@RequestParam(required =false) String topic) {
+	public ResponseEntity<List<Article>> getAllCourse(@RequestParam(required =false) String title) {
 		
 		try {
-			List<Article> courses = new ArrayList<Article>();
+			List<Article> article = new ArrayList<Article>();
 			
-			if (topic == null) {
-				articleRepository.findAll().forEach(courses::add);
+			if (title == null) {
+				articleRepository.findAll().forEach(article::add);
 			} else {
-				articleRepository.findByTopic(topic).forEach(courses::add);
+				articleRepository.findByTitle(title).forEach(article::add);
 			}
 			
-			if(courses.isEmpty()) {
+			if(article.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
 			// return the contents
-			return new ResponseEntity<>(courses, HttpStatus.OK);
+			return new ResponseEntity<>(article, HttpStatus.OK);
 			
 		} catch (Exception e) {	//return error
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	// Get article by id
+	@GetMapping("/articles/{id}")
+	public ResponseEntity<Article> getCourseById(@PathVariable("id") long id) {
+		
+		Optional<Article> course = articleRepository.findById(id);
+		
+		if (course.isPresent()) {
+			return new ResponseEntity<>(course.get(), HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+	
+	// Post method
+	// Create an article
+	@PostMapping("/articles")
+	public ResponseEntity<Article> createArticle(@RequestBody Article article) {
+		try {
+			Article _article = articleRepository.save(
+					new Article(article.getTitle(), article.getContent(), article.getUserId()));
+			return new ResponseEntity<>(_article, HttpStatus.CREATED);
+		} catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	// Delete an article by Id
+    @DeleteMapping("/articles/{id}")
+    public ResponseEntity<HttpStatus> deleteArticle(@PathVariable("id") long id) {
+        try {
+            articleRepository.deleteById(id);
+            //return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
