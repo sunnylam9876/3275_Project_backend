@@ -26,14 +26,17 @@ public class UserController {
 	@Autowired
     private UserService userService;
 	
+	
 	@Autowired
     private UserRepository userRepository;
+	
 
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
         User newUser = userService.registerUser(user);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
+    
 
     @PostMapping("/login")
     public ResponseEntity<User> loginUser(@RequestBody User user) {
@@ -44,6 +47,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
+    
 
     //return the user object excluding the password.
     @GetMapping("/{userId}")
@@ -62,6 +66,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    
     
     @PutMapping("/{userId}/status")
     public ResponseEntity<User> updateUserStatus(@PathVariable Long userId, @RequestParam int status) {

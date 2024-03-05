@@ -54,6 +54,7 @@ public class Application {
 			commentRepo.save(new Comment(4, 1, "This is a fun article."));
 			commentRepo.save(new Comment(3, 1, "This article is very boring!\nMy book is much better than this one!"));
 			
+			
 		};
 	}
 }

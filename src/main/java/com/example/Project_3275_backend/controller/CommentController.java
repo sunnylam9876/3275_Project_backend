@@ -41,6 +41,7 @@ public class CommentController {
 	    }
 	}
 	
+	
 	@GetMapping("/flagged")
 	public ResponseEntity<List<Comment>> getCommentsByFlag(@RequestParam int flag) {
 	    try {
@@ -56,6 +57,7 @@ public class CommentController {
 	    }
 	   
 	}
+	
 
     @PostMapping
     public ResponseEntity<List<Comment>> createComment(@RequestBody Comment comment) {
@@ -82,6 +84,7 @@ public class CommentController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    
     
     //In PostMan, only need to provide the params key"flag" and value.
     @PutMapping("/{id}/flag")

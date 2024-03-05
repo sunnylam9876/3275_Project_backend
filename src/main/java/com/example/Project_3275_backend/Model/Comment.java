@@ -107,6 +107,4 @@ public class Comment {
 	public void setLastModifiedTime(Date lastModifiedTime) {
 		this.lastModifiedTime = lastModifiedTime;
 	}
-	
-	
 }
