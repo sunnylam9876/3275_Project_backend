@@ -7,7 +7,8 @@ import org.springframework.context.annotation.Bean;
 
 import com.example.Project_3275_backend.Model.Article;
 import com.example.Project_3275_backend.Model.ArticleRepository;
-
+import com.example.Project_3275_backend.Model.Comment;
+import com.example.Project_3275_backend.Model.CommentRepository;
 import com.example.Project_3275_backend.Model.Guideline;
 import com.example.Project_3275_backend.Model.GuidelineRepository;
 
@@ -26,7 +27,7 @@ public class Application {
 	}
 	
 	@Bean
-	ApplicationRunner init(UserRepository userRepo, ArticleRepository articleRepo, NotificationRepository notificationRepo, GuidelineRepository guidelineRepo) {
+	ApplicationRunner init(UserRepository userRepo, ArticleRepository articleRepo, NotificationRepository notificationRepo, GuidelineRepository guidelineRepo, CommentRepository commentRepo) {
 		return args -> {
 			// Create users at the beginning			
 			User admin1 = userRepo.save(new User("admin_1", "password_4", "admin"));
@@ -43,11 +44,16 @@ public class Application {
 			guidelineRepo.save(new Guideline("Rule1"));
 			guidelineRepo.save(new Guideline("Rule2"));
 			
-			//Create notifications
+			// Create notifications
 			notificationRepo.save(new Notification(writer1.getUserId(), "Welcome!", admin1.getUserId()));
 			notificationRepo.save(new Notification(writer2.getUserId(), "Welcome!", admin1.getUserId()));
 			notificationRepo.save(new Notification(reader1.getUserId(), "Welcome!", admin1.getUserId()));
 			notificationRepo.save(new Notification(writer1.getUserId(), "This is the Message from reader1 to writer1", reader1.getUserId()));
+			
+			// Create comments
+			commentRepo.save(new Comment(4, 1, "This is a fun article."));
+			commentRepo.save(new Comment(3, 1, "This article is very boring!\nMy book is much better than this one!"));
+			
 		};
 	}
 }

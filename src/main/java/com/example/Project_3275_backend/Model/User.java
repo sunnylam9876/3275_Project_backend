@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
@@ -38,6 +37,7 @@ public class User {
 		this.username = username;
 		this.password = password;
 		this.role = role;
+		this.status = 0;
 	}
 
 	public Long getUserId() {
@@ -82,9 +82,4 @@ public class User {
         this.status = status;
     }
 
-    // This method will be called before persisting the entity
-    @PrePersist
-    public void prePersist() {
-        this.status = 0; // Set status to 0 before persisting
-    }
 }
