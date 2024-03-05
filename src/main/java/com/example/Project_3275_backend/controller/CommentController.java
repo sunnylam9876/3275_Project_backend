@@ -47,7 +47,7 @@ public class CommentController {
 	    try {
 	    	List<Comment> flaggedComments = new ArrayList<Comment>();
 	    	commentRepository.findByFlag(flag).forEach(flaggedComments::add);
-	 	    if (flaggedComments.isEmpty()) {
+	 	    if (!flaggedComments.isEmpty()) {
 	 	        return new ResponseEntity<>(flaggedComments, HttpStatus.OK);
 	 	    } else {
 	 	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -104,7 +104,7 @@ public class CommentController {
     public ResponseEntity<HttpStatus> deleteComment(@PathVariable long id) {
     	try {
     		commentRepository.deleteById(id);
-    		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    		return new ResponseEntity<>(HttpStatus.OK);
     	} catch (Exception e) {
     		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     	}
