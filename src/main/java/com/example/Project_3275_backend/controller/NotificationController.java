@@ -27,6 +27,7 @@ public class NotificationController {
 	@Autowired
 	NotificationRepository notificationRepository;
 	
+	
 	@GetMapping("/notifications")
 	public ResponseEntity<List<Notification>> getAllNotification(){
 		
@@ -90,6 +91,7 @@ public class NotificationController {
             
         }
     }
+	
 		
 	@PostMapping("/notifications")
 	public ResponseEntity<List<Notification>> createNotification(@RequestBody Notification notification){
