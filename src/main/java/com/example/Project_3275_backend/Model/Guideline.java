@@ -21,9 +21,7 @@ public class Guideline {
 		
 	}
 	
-	public Guideline(long guidelineId, String content) {
-		super();
-		this.guidelineId = guidelineId;
+	public Guideline(String content) {
 		this.content = content;
 	}
 
