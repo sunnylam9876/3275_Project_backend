@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 
 import com.example.Project_3275_backend.Model.Article;
 import com.example.Project_3275_backend.Model.ArticleRepository;
-
 import com.example.Project_3275_backend.Model.Guideline;
 import com.example.Project_3275_backend.Model.GuidelineRepository;
 

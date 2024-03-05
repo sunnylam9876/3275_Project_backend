@@ -26,6 +26,7 @@ public class GuidelineController {
 	@Autowired
 	GuidelineRepository guidelineRepository;
 	
+	// Testing
 	// Get all guidelines
 	@GetMapping("/guidelines")
 	public ResponseEntity<List<Guideline>> getAllGuideline(@RequestParam(required=false) String content) {
