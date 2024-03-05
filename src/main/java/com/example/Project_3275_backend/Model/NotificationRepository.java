@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
 	List<Notification> findByUserId(long userId);
 	List<Notification> findByMessage(String message);
-	List<Notification> findByCreatedTime (Date createdTime);
+	//List<Notification> findByCreatorId(long creatorId);
 }

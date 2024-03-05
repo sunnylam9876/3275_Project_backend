@@ -28,21 +28,14 @@ public class NotificationController {
 	NotificationRepository notificationRepository;
 	
 	@GetMapping("/notifications")
-	public ResponseEntity<List<Notification>> getNotificationByUserId(@RequestParam(required = false)Long userId){
+	public ResponseEntity<List<Notification>> getAllNotification(){
 		
 		try {
+			
 			List<Notification> notifications = new ArrayList<Notification>();
 
-			if (userId == null) {
-				
-				notificationRepository.findAll().forEach(notifications::add);
-				
-			} else {
+			notificationRepository.findAll().forEach(notifications::add);
 			
-				notificationRepository.findByUserId(userId).forEach(notifications::add);	
-				
-			}
-
 			if(notifications.isEmpty()) {
 				
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -60,24 +53,48 @@ public class NotificationController {
 		}
 	}
 
-	/*
-	@GetMapping("/notifications/{id}")
-	public ResponseEntity<Notification> getNotificationById(@PathVariable("id") long id){
+
+	@GetMapping("/notifications/{userId}")
+    public ResponseEntity<List<Notification>> getNotificationByUserId(@PathVariable Optional<Long> userId) {
+        try {
+            List<Notification> notifications = new ArrayList<>();
+
+            if (userId.isPresent()) {
+            	
+            	List<Notification> notificationData = notificationRepository.findByUserId(userId.get());
+            	
+                if (notificationData.isEmpty()) {
+                	
+                	return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                    
+                } else {
+                	
+                    notifications.addAll(notificationData);
+                    
+                }
+            }
+
+            if (notifications.isEmpty()) {
+            	
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                
+            } else {
+            	
+                return new ResponseEntity<>(notifications, HttpStatus.OK);
+                
+            }
+            
+        } catch (Exception e) {
+        	
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            
+        }
+    }
 		
-		Optional<Notification> notificationData = notificationRepository.findById(id);
-		
-		if (notificationData.isPresent()) {
-			return new ResponseEntity<>(notificationData.get(),HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-	*/
-	
 	@PostMapping("/notifications")
 	public ResponseEntity<List<Notification>> createNotification(@RequestBody Notification notification){
 		try {
-			Notification newNotification = new Notification(notification.getUserId(), notification.getMessage(), notification.getCreatedTime());
+			Notification newNotification = new Notification(notification.getUserId(), notification.getMessage(), notification.getCreatorId());
 			notificationRepository.save(newNotification);
 			return new ResponseEntity<>(HttpStatus.CREATED);
 		} catch (Exception e) {

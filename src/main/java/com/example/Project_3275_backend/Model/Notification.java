@@ -2,6 +2,8 @@ package com.example.Project_3275_backend.Model;
 
 import java.util.Date;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,16 +26,29 @@ public class Notification {
 	@Column(name = "message")
 	private String message;
 	
+	@Column(name = "creatorId")
+	private long creatorId;
+	
 	@Column(name = "createdTime")
+	@CreationTimestamp
 	private Date createdTime;
 
 	public Notification() {
 	}
 	
-	public Notification(long userId, String message, Date createdTime) {
+	public Notification(long userId, String message, long creatorId) {
+		super();
 		this.userId = userId;
 		this.message = message;
-		this.createdTime = createdTime;
+		this.creatorId = creatorId;
+	}
+
+	public long getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(long creatorId) {
+		this.creatorId = creatorId;
 	}
 
 	public long getId() {
@@ -51,6 +66,7 @@ public class Notification {
 	public void setUserId(long userId) {
 		this.userId = userId;
 	}
+
 
 	public String getMessage() {
 		return message;
