@@ -1,10 +1,13 @@
 package com.example.Project_3275_backend.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,6 +25,9 @@ public class User {
 	
 	@Column(name = "role")
 	private String role;
+	
+	@Column(name = "status")
+    private int status;
 	
 	public User() {
 		
@@ -51,9 +57,11 @@ public class User {
 	}
 
 	// Disabled for security reason
-//	private String getPassword() {
-//		return password;
-//	}
+	//needed for userSerivec-Login
+	@JsonIgnore // Exclude password from serialization
+	public String getPassword() {
+		return password;
+	}
 
 	public void setPassword(String password) {
 		this.password = password;
@@ -66,4 +74,17 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
+	public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    // This method will be called before persisting the entity
+    @PrePersist
+    public void prePersist() {
+        this.status = 0; // Set status to 0 before persisting
+    }
 }
