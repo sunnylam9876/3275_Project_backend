@@ -51,7 +51,7 @@ public class GuidelineController {
 	
 	// Create a guideline
 	@PostMapping("/guidelines")
-	public ResponseEntity<Guideline> createArticle(@RequestBody Guideline guideline) {
+	public ResponseEntity<Guideline> createGuideline(@RequestBody Guideline guideline) {
 		try {
 			Guideline _guideline = guidelineRepository.save(
 					new Guideline(guideline.getContent()));
@@ -63,7 +63,7 @@ public class GuidelineController {
 	
 	// Update a guideline
 	@PutMapping("/guidelines/{id}")
-	public ResponseEntity<Guideline> updateCountry(@PathVariable("id") long id, @RequestBody Guideline guideline) {
+	public ResponseEntity<Guideline> updateGuideline(@PathVariable("id") long id, @RequestBody Guideline guideline) {
 		Optional<Guideline> guidelineData = guidelineRepository.findById(id);
 		if (guidelineData.isPresent()) {
 			Guideline _guideline = guidelineData.get();
