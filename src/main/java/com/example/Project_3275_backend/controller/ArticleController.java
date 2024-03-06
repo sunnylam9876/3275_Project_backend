@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Project_3275_backend.Model.Article;
 import com.example.Project_3275_backend.Model.ArticleRepository;
+import com.example.Project_3275_backend.Model.Guideline;
 
 @RestController
 @RequestMapping("/api")
@@ -74,6 +76,20 @@ public class ArticleController {
 		} catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	// Update an article
+	@PutMapping("/articles/{id}")
+	public ResponseEntity<Article> updateArticle(@PathVariable("id") long id, @RequestBody Article article) {
+		Optional<Article> articleData = articleRepository.findById(id);
+		if (articleData.isPresent()) {
+			Article _article = articleData.get();
+			_article.setTitle(article.getTitle());
+			_article.setContent(article.getContent());
+			return new ResponseEntity<>(articleRepository.save(_article), HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
 	// Delete an article by Id
