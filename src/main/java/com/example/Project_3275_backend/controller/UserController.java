@@ -20,6 +20,7 @@ import com.example.Project_3275_backend.Model.UserService;
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("/api/users")
+//@RequestMapping("/api")
 
 public class UserController {
 	
@@ -37,16 +38,18 @@ public class UserController {
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
     
-
+    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping("/login")
     public ResponseEntity<User> loginUser(@RequestBody User user) {
         User loggedInUser = userService.loginUser(user.getUsername(), user.getPassword());
         
         // for testing purpose
-        //System.out.printf(user.getUsername() + "\n");
-        //System.out.printf(user.getPassword() + "\n");
+        System.out.printf(user.getUsername() + "\n");
+        System.out.printf(user.getPassword() + "\n");
         if (loggedInUser != null) {
+        	System.out.printf(loggedInUser.getUserId().toString());
             return new ResponseEntity<>(loggedInUser, HttpStatus.OK);
+            
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
