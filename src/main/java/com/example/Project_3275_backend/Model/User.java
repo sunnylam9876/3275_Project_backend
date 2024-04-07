@@ -58,7 +58,7 @@ public class User {
 
 	// Disabled for security reason
 	//needed for userSerivec-Login
-	@JsonIgnore // Exclude password from serialization
+	//@JsonIgnore // Exclude password from serialization
 	public String getPassword() {
 		return password;
 	}
