@@ -33,7 +33,7 @@ public class ArticleController {
 	// Get all article
 	// ****for checking purpose****
 	@GetMapping("/articles")
-	public ResponseEntity<List<Article>> getAllCourse(@RequestParam(required =false) String title) {
+	public ResponseEntity<List<Article>> getAllArticles(@RequestParam(required =false) String title) {
 		
 		try {
 			List<Article> article = new ArrayList<Article>();
@@ -57,7 +57,7 @@ public class ArticleController {
 	
 	// Get article by id
 	@GetMapping("/articles/{id}")
-	public ResponseEntity<Article> getCourseById(@PathVariable("id") long id) {
+	public ResponseEntity<Article> getArticleById(@PathVariable("id") long id) {
 		
 		Optional<Article> course = articleRepository.findById(id);
 		
@@ -67,6 +67,21 @@ public class ArticleController {
 		
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
+	
+	// Get articles by user ID
+	@GetMapping("/articles/user/{userId}")
+	public ResponseEntity<List<Article>> getArticlesByUserId(@PathVariable("userId") long userId) {
+	    try {
+	        List<Article> articles = articleRepository.findByUserId(userId);
+	        if (articles.isEmpty()) {
+	            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	        }
+	        return new ResponseEntity<>(articles, HttpStatus.OK);
+	    } catch (Exception e) {
+	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
+	}
+
 	
 	// Post method
 	// Create an article

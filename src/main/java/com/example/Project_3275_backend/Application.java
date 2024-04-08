@@ -32,10 +32,10 @@ public class Application {
 	ApplicationRunner init(UserRepository userRepo, ArticleRepository articleRepo, NotificationRepository notificationRepo, GuidelineRepository guidelineRepo, CommentRepository commentRepo) {
 		return args -> {
 			// Create users at the beginning			
-			User admin1 = userRepo.save(new User("admin_1", "password_4", "admin"));
-			User writer1 = userRepo.save(new User("writer_1", "password_1", "writer"));
-			User writer2 = userRepo.save(new User("writer_2", "password_2", "writer"));
-			User reader1 = userRepo.save(new User("reader_1", "password_3", "reader"));
+			User admin1 = userRepo.save(new User("admin_1", "admin_1", "admin"));
+			User writer1 = userRepo.save(new User("writer_1", "writer_1", "writer"));
+			User writer2 = userRepo.save(new User("writer_2", "writer_", "writer"));
+			User reader1 = userRepo.save(new User("reader_1", "reader_1", "reader"));
 
 			
 			// Create some articles
