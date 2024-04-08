@@ -44,8 +44,8 @@ public class UserController {
         User loggedInUser = userService.loginUser(user.getUsername(), user.getPassword());
         
         // for testing purpose
-        System.out.printf(user.getUsername() + "\n");
-        System.out.printf(user.getPassword() + "\n");
+        //System.out.printf(user.getUsername() + "\n");
+        //System.out.printf(user.getPassword() + "\n");
         if (loggedInUser != null) {
         	System.out.printf(loggedInUser.getUserId().toString());
             return new ResponseEntity<>(loggedInUser, HttpStatus.OK);
