@@ -109,6 +109,19 @@ public class ArticleController {
 		
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
+
+	// Update an article count
+	@PutMapping("/articles/count/{id}")
+	public ResponseEntity<Article> updateArticleCount(@PathVariable("id") long id, @RequestBody Article article) {
+		Optional<Article> articleData = articleRepository.findById(id);
+		if (articleData.isPresent()) {
+			Article _article = articleData.get();
+			_article.setNoOfView(_article.getNoOfView() + 1);
+			return new ResponseEntity<>(articleRepository.save(_article), HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
 	
 	// Delete an article by Id
     @DeleteMapping("/articles/{id}")
