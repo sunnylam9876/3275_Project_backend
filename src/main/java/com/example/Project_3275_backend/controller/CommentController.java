@@ -57,6 +57,20 @@ public class CommentController {
 	    }
 	   
 	}
+
+	@GetMapping("/article/{articleId}")
+	public ResponseEntity<List<Comment>> getCommentsByArticleId(@PathVariable long articleId) {
+	    try {
+	        List<Comment> comments = commentRepository.findByArticleId(articleId);
+	        if (!comments.isEmpty()) {
+	            return new ResponseEntity<>(comments, HttpStatus.OK);
+	        } else {
+	            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	        }
+	    } catch (Exception e) {
+	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
+	}
 	
 
     @PostMapping
