@@ -85,17 +85,16 @@ public class CommentController {
     }
       
     
-    //In PostMan, only need to choose raw & json. Type the content directly. no wrap and key need to be input.
     @PutMapping("/{id}")
-    public ResponseEntity<Comment> updateCommentContent(@PathVariable long id, @RequestBody String content) {
+    public ResponseEntity<Comment> updateComment(@PathVariable("id") long id, @RequestBody Comment comment) {
         Optional<Comment> commentData = commentRepository.findById(id);
         if (commentData.isPresent()) {
             Comment _comment = commentData.get();
-            _comment.setContent(content);
+            _comment.setContent(comment.getContent());
             _comment.setLastModifiedTime(new Date());    
             return new ResponseEntity<>(commentRepository.save(_comment), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
     
